@@ -1,14 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <TopNav v-show="$route.meta.showNav"></TopNav>
+    <!-- router-view 是路由匹配到视图组件显示位置 -->
+    <div>
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </div>
-    <router-view/>
+    <Play :musicID="$root.playingMusic.musicID"></Play>
   </div>
 </template>
-
-<style lang="less">
+<script>
+//App.vue也是组件. 是根组件
+import TopNav from "./components/TopNav";
+import Play from './components/Play';
+export default {
+  components: {
+    TopNav,
+    Play
+  },
+  methods:{
+    playMusic(id){
+        this.musicID=id;
+    }
+  }
+};
+</script>
+<style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -19,14 +37,14 @@
 
 #nav {
   padding: 30px;
+}
+/* kele88.cn */
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
